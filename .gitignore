@@ -10,3 +10,9 @@ ios/build/
 .idea/
 google-services.json
 android/app/google-services.json
+
+# Internal development files
+todo.md
+prd.md
+*.keystore
+debug.keystore
