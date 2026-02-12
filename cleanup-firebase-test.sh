@@ -1,3 +1,14 @@
+#!/bin/bash
+# Firebase Test Cleanup Script
+# Run this after confirming analytics work in Firebase Console
+
+echo "🧹 Cleaning up Firebase test code..."
+
+# Remove test import and test event from App.tsx
+echo "Removing test analytics import from App.tsx..."
+
+# Create a temporary file with the cleaned App.tsx
+cat > temp_app.tsx << 'EOF'
 import React, { useState, useCallback, useEffect } from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { StatusBar, useColorScheme } from 'react-native';
@@ -52,3 +63,18 @@ function App() {
 }
 
 export default App;
+EOF
+
+# Replace App.tsx with cleaned version
+mv temp_app.tsx App.tsx
+
+echo "✅ Cleaned up test code from App.tsx"
+echo "🔍 Verify TypeScript still compiles..."
+npx tsc --noEmit
+
+if [ $? -eq 0 ]; then
+    echo "✅ TypeScript compilation successful"
+    echo "🚀 Ready for Phase 7 - Edge Cases & Validation"
+else 
+    echo "❌ TypeScript compilation failed - check for issues"
+fi
